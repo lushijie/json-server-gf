@@ -1,5 +1,6 @@
 # json-server for my girlfriend
 
+![快跑小白](./public/static/200w.gif)
 
 ### 安装依赖
     1. npm install
