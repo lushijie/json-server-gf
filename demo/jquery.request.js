@@ -2,23 +2,23 @@
 * @Author: lushijie
 * @Date:   2016-12-14 18:10:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-12-14 18:29:55
+* @Last Modified time: 2016-12-14 18:59:20
 */
 ;(function() {
-    //测试服务器地址
+    //测试环境下，webserver的基地址
     var TEST_SERVER_ADDRESS = location.protocol + '127.0.0.1:8080';
-    //接口测试服务器地址
+    //测试环境下，提供接口的服务器地址
     var API_SERVER_ADDRESS = 'http://127.0.0.1:3000';
-    //当前环境下location地址
+    //当前环境下location地址（当前环境可能为线上环境或者测试环境）
     var CURRENT_SERVER_ADDRESS = location.protocol + '//' + location.host;
-    function isDevENV(){
-      return (CURRENT_SERVER_ADDRESS == TEST_SERVER_ADDRESS);
-    }
-    var API_BASE_URL = isDevENV ? API_SERVER_ADDRESS : CURRENT_SERVER_ADDRESS;
+    //非HTTP或者HTTPS类请求情况下，API的基地址
+    var API_BASE_URL = (CURRENT_SERVER_ADDRESS == TEST_SERVER_ADDRESS) ? API_SERVER_ADDRESS : CURRENT_SERVER_ADDRESS;
 
     // 通用逻辑处理
     var commonLogicHandler = function(data, textStatus, jqXHR) {
+      //todo
     };
+
     // 通用网络请求
     $.request = function(url, method, data) {
         var deferred = $.Deferred();
@@ -35,7 +35,6 @@
                 404: function() {}
             }
         }).then(function(data, textStatus, jqXHR) {
-            // 通用逻辑处理
             commonLogicHandler.call(null, data, textStatus, jqXHR);
             // errno 不为0时, 代表错误
             if ( data && data.errno ) {
@@ -45,7 +44,6 @@
             }
         }, function(jqXHR, textStatus, errorThrown) {
             if( jqXHR.readyState != 0){
-                // ajax 请求错误
                 var ajaxError = { errno: 1,  errmsg: '未知错误' };
                 switch(textStatus) {
                     case 'timeout':
@@ -63,7 +61,7 @@
                 deferred.reject(ajaxError);
             }
         }).always(function() {
-            //always
+            //always todo
         });
         return deferred;
     };
@@ -72,9 +70,10 @@
     $.getJson = function(url, data) {
         data = data || {};
         data.r = Math.random();
-        return $.request(url, 'get', data).then(function(data) {
-            return data;
-        });
+        return $.request(url, 'get', data);
+        // return $.request(url, 'get', data).then(function(data) {
+        //     return data;
+        // });
     };
 
     // post
