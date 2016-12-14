@@ -2,11 +2,11 @@
 * @Author: lushijie
 * @Date:   2016-12-14 18:10:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-12-14 18:59:20
+* @Last Modified time: 2016-12-14 19:18:24
 */
 ;(function() {
     //测试环境下，webserver的基地址
-    var TEST_SERVER_ADDRESS = location.protocol + '127.0.0.1:8080';
+    var TEST_SERVER_ADDRESS = location.protocol + '//127.0.0.1:8080';
     //测试环境下，提供接口的服务器地址
     var API_SERVER_ADDRESS = 'http://127.0.0.1:3000';
     //当前环境下location地址（当前环境可能为线上环境或者测试环境）
