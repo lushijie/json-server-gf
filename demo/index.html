@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="./jquery.js"></script>
+    <script type="text/javascript" src="./jquery.request.js"></script>
+  </head>
+  <body>
+      <script type="text/javascript">
+        var a =$.getJson('/test/posts').then(function(data) {
+          console.log('success', data);
+        },function(data) {
+          console.log('failed', data);
+        });
+      </script>
+  </body>
+</html>

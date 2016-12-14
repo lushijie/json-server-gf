@@ -11,6 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "python -m SimpleHTTPServer 8080",
     "json": "json-server --config=./json-server/setting.json ./json-server/db.json"
   },
   "author": "",
