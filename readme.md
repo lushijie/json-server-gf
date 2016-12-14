@@ -1,8 +1,4 @@
-
 # json-server for my girlfriend
-
-
-----------
 
 
 ### 安装依赖
@@ -17,10 +13,6 @@
 ### WEB-server
     1. npm run server
     2. 默认 http://127.0.0.1:8080/
-
-
-----------
-
 
 ### demo运行
     0. 安装依赖之后,进入该项目根目录
