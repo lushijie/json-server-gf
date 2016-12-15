@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2016-12-14 18:10:13
 * @Last Modified by:   lushijie
-* @Last Modified time: 2016-12-14 19:18:24
+* @Last Modified time: 2016-12-15 11:19:13
 */
 ;(function() {
     //测试环境下，webserver的基地址
@@ -14,13 +14,27 @@
     //非HTTP或者HTTPS类请求情况下，API的基地址
     var API_BASE_URL = (CURRENT_SERVER_ADDRESS == TEST_SERVER_ADDRESS) ? API_SERVER_ADDRESS : CURRENT_SERVER_ADDRESS;
 
+    $.getTrimedObject = function(obj) {
+      for(var key in obj) {
+        if(obj.hasOwnProperty(key)) {
+          if(typeof(obj[key]) == "string") {
+            obj[key] = $.trim(obj[key]);
+          }else if($.isPlainObject(obj[key])) {
+            $.getTrimedObject(obj[key]);
+          }
+        }
+      }
+      return obj;
+    };
+
     // 通用逻辑处理
     var commonLogicHandler = function(data, textStatus, jqXHR) {
       //todo
     };
 
     // 通用网络请求
-    $.request = function(url, method, data) {
+    $.request = function(url, method, data, preventTrim) {
+        data = preventTrim ? data : $.getTrimedObject(data);
         var deferred = $.Deferred();
         if(!/^https?/.test(url) && url.indexOf('/') != 0) {
           throw  ('url格式错误，请检查! url = ' + url);
@@ -67,18 +81,18 @@
     };
 
     // get
-    $.getJson = function(url, data) {
+    $.getJson = function(url, data, preventTrim) {
         data = data || {};
         data.r = Math.random();
-        return $.request(url, 'get', data);
+        return $.request(url, 'get', data, preventTrim);
         // return $.request(url, 'get', data).then(function(data) {
         //     return data;
         // });
     };
 
     // post
-    $.postData = function(url, data) {
+    $.postData = function(url, data, preventTrim) {
         data = data || {};
-        return $.request(url, 'post', data);
+        return $.request(url, 'post', data, preventTrim);
     };
 })();
